@@ -1,0 +1,3 @@
+k: 50
+distance_type: "minkowski"
+order: 1
