@@ -44,6 +44,9 @@ if __name__ == '__main__':
         print('[Warning] You are selecting the SVM implemented by ourselves. This can be VERY slow (several hours). Consider selecting SVM implemented by sklearn.')
         from models.svm import SVM
         model = SVM(**cfgs)
+    elif args.model.lower() == 'mlp':
+        from models.mlp import MLP
+        model = MLP(**cfgs)
     else:
         raise AttributeError('Unimplemented Model.')
     
@@ -61,12 +64,19 @@ if __name__ == '__main__':
             noise_file = args.noise_path
         )
         if args.val == 'holdout':
-            X_train, y_train, X_val, y_val = splitter()
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_val)
-            acc = (y_pred == y_val).sum() / len(y_val)
-            print('Validation Accuracy = {} %'.format(acc * 100))
+            if args.model.lower() == 'mlp':
+                X_train, y_train, X_val, y_val = splitter()
+                acc = model.fit(X_train, y_train, X_val, y_val)
+                print('Validation Accuracy = {} %'.format(acc * 100))
+            else:
+                X_train, y_train, X_val, y_val = splitter()
+                model.fit(X_train, y_train)
+                y_pred = model.predict(X_val)
+                acc = (y_pred == y_val).sum() / len(y_val)
+                print('Validation Accuracy = {} %'.format(acc * 100))
         elif args.val == 'cross-validation':
+            if args.model.lower() == 'mlp':
+                raise AttributeError('MLP does not support cross validation.')
             acc = 0.0
             for k in range(splitter.get_K()):
                 X_train, y_train, X_val, y_val = splitter(index = k)

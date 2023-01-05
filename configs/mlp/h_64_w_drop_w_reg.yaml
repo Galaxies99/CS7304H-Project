@@ -1,0 +1,6 @@
+arch: [['Linear', 1536, 64], ['ReLU', True], ['Dropout', 0.2], ['Linear', 64, 20], ['Softmax', 1]]
+num_classes: 20
+regularization: True
+epoch: 10
+batch_size: 16
+learning_rate: 0.001

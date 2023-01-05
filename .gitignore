@@ -2,8 +2,7 @@
 .history/
 .DS_Store
 */.DS_Store
-data/*.csv
-data/*.npy
+data/
 logs/
 
 # Byte-compiled / optimized / DLL files

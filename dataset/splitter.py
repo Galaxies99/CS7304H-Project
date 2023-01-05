@@ -65,3 +65,4 @@ class Splitter(object):
 
     def get_K(self):
         return self.K if self.val == 'cross-validation' else 0
+    
